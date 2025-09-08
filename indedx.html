@@ -11,6 +11,11 @@
 </head>
 
 <body class="bg-[#e8fff1]">
+
+
+
+
+
     <nav>
         <div class="flex flex-col sm:flex-row bg-[#15803D] justify-between items-center">
             <div class="text-white m-2">
@@ -28,6 +33,15 @@
             </div>
         </div>
     </nav>
+
+    <!-- loader -->
+    <div id="loader" class="fixed inset-0 bg-white/80 flex flex-col items-center justify-center z-50 hidden">
+        <div class="w-14 h-14 border-4 border-green-600 border-t-transparent rounded-full animate-spin">
+        </div>
+        <p class="mt-4 text-green-700 font-semibold">Loading, please wait...</p>
+    </div>
+
+
     <section class="hero bg-[#CFF0DC]">
         <div class="flex flex-col md:flex-row hero-img-1 items-center md:justify-between">
             <!-- Left image (hidden on mobile) -->
@@ -58,7 +72,8 @@
     <main class="">
 
         <h1 class="text-center text-4xl font-semibold m-2 p-4">Choose Your Trees</h1>
-        <div class="main-container flex flex-col items-center sm:flex-row mx-2 sm:m-6 sm:gap-6 sm:items-start  text-center">
+        <div
+            class="main-container flex flex-col items-center sm:flex-row mx-2 sm:m-6 sm:gap-6 sm:items-start  text-center">
             <div class="p-4 w-64 rounded left-side">
                 <h2 class="font-semibold text-lg mb-3">Categories</h2>
                 <div id="category-list" class="flex flex-col">
@@ -75,7 +90,8 @@
 
 
 
-            <div id="cart" class="bg-white rounded-lg shadow p-3 sm:p-4 flex flex-col  w-full sm:w-80 mt-4 sm:mt-0 self-stretch">
+            <div id="cart"
+                class="bg-white rounded-lg shadow p-3 sm:p-4 flex flex-col  w-full sm:w-80 mt-4 sm:mt-0 self-stretch">
                 <div>
                     <h2 class="font-semibold text-xl mb-4">Your Cart</h2>
                     <div id="cart-items" class="space-y-3">
