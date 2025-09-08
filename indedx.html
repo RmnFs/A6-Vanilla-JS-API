@@ -5,17 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Green Earth</title>
-
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-
+    <script src="script.js"></script>
 </head>
 
-<body>
-
+<body class="bg-[#e8fff1]">
     <nav>
-
         <div class="flex flex-col sm:flex-row bg-[#15803D] justify-between items-center">
             <div class="text-white m-2">
                 <h2>Green Earth</h2>
@@ -31,16 +27,13 @@
                 <button class="bg-[#FACC15] rounded-2xl px-2 py-1 text-[#15803D]  m-2">Plant a Tree</button>
             </div>
         </div>
-
     </nav>
-
-    <section class="hero bg-[#CFF0DC] m-2">
+    <section class="hero bg-[#CFF0DC]">
         <div class="flex flex-col md:flex-row hero-img-1 items-center md:justify-between">
             <!-- Left image (hidden on mobile) -->
             <div class="hidden md:block">
                 <img src="assets/hero-leaf1.png" alt="" />
             </div>
-
             <!-- Text content  -->
             <div class="hero-text flex flex-col justify-center mx-4 text-center max-w-md gap-1">
                 <h2 class="font-bold text-2xl md:text-4xl">
@@ -54,7 +47,6 @@
                     Get Involved
                 </button>
             </div>
-
             <!-- Right image (hidden on mobile) -->
             <div class="hidden md:block">
                 <img src="assets/hero-leaf2.png" alt="" />
@@ -63,6 +55,42 @@
     </section>
 
 
+    <main class="">
+
+        <h1 class="text-center text-4xl font-semibold m-2 p-4">Choose Your Trees</h1>
+        <div class="main-container flex flex-col items-center sm:flex-row mx-2 sm:m-6 sm:gap-6 sm:items-start  text-center">
+            <div class="p-4 w-64 rounded left-side">
+                <h2 class="font-semibold text-lg mb-3">Categories</h2>
+                <div id="category-list" class="flex flex-col">
+                    <!-- Buttons with JS here -->
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 middle-side self-start"
+                id="cards-container">
+                <!-- cards here -->
+            </div>
+
+
+
+
+            <div id="cart" class="bg-white rounded-lg shadow p-3 sm:p-4 flex flex-col  w-full sm:w-80 mt-4 sm:mt-0 self-stretch">
+                <div>
+                    <h2 class="font-semibold text-xl mb-4">Your Cart</h2>
+                    <div id="cart-items" class="space-y-3">
+                        <!-- Cart items will go here dynamically -->
+                    </div>
+                </div>
+                <div class="border-t mt-4 pt-3 flex  font-semibold text-lg">
+                    <span>Total:</span>
+                    <span id="cart-total">৳0</span>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
+
+<!-- Added responsiveness -->
 
 </html>
