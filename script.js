@@ -70,17 +70,17 @@ function renderCategoryButtons(categories) {
         btn.addEventListener("click", () => {
             console.log("Category clicked:", cat.category_name);
 
-            // 🔹 Remove active class from all category buttons
+            //Remove active class from all category buttons
             document.querySelectorAll("#category-list button").forEach((b) => {
                 b.classList.remove("bg-green-600", "text-white");
                 b.classList.add("hover:bg-green-100");
             });
 
-            // 🔹 Add active class to current clicked button
+            //Add active class to current clicked button
             btn.classList.add("bg-green-600", "text-white");
             btn.classList.remove("hover:bg-green-100");
 
-            // 🔹 Fetch plants by category
+            // Fetch plants by category
             fetchCategoryPlants(cat.id);
         });
 
@@ -184,7 +184,7 @@ async function loadPlantDetails(plantId) {
             if (modal && modal.showModal) {
                 modal.showModal();
             } else {
-                console.error("Modal element not found or showModal not supported!");
+                console.error("Modal element not found");
             }
         } else {
             console.warn("No plant details found in response.", result);
@@ -205,15 +205,17 @@ function renderPlantModal(plant) {
              alt="${plant.name}" 
              class="w-full h-48 object-cover rounded mb-3" />
 
-        <p class="text-gray-600 mb-2">
-            ${plant.description}
-        </p>
 
-        <div class="flex justify-between items-center mb-4">
-            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">
-                ${plant.category}
+        <div class="flex-col  mb-4">
+          <div>
+            <span class="text-gray-700 text-xs py-1 rounded font-bold">
+                Category: ${plant.category}
             </span>
-            <span class="font-bold text-lg">৳${plant.price}</span>
+         </div>
+            <span class="font-bold text-lg">Price: ৳${plant.price}</span>
+             <p class="text-gray-600 mb-2">
+           <span class="font-bold text-black">Description:</span> ${plant.description}
+        </p>
         </div>
 
         <div class="modal-action">
