@@ -50,6 +50,8 @@ async function loadCategories() {
 
 // ----------- Render Category Buttons Dynamically -----------
 
+
+
 function renderCategoryButtons(categories) {
     const container = document.getElementById("category-list");
     container.innerHTML = "";
@@ -63,10 +65,22 @@ function renderCategoryButtons(categories) {
         const btn = document.createElement("button");
         btn.textContent = cat.category_name;
         btn.className =
-            "hover:bg-green-100  py-2 rounded text-center   cursor-pointer transition sm:text-left";
+            "py-2 px-1 rounded text-center cursor-pointer transition sm:text-left hover:bg-green-100";
 
         btn.addEventListener("click", () => {
             console.log("Category clicked:", cat.category_name);
+
+            // 🔹 Remove active class from all category buttons
+            document.querySelectorAll("#category-list button").forEach((b) => {
+                b.classList.remove("bg-green-600", "text-white");
+                b.classList.add("hover:bg-green-100");
+            });
+
+            // 🔹 Add active class to current clicked button
+            btn.classList.add("bg-green-600", "text-white");
+            btn.classList.remove("hover:bg-green-100");
+
+            // 🔹 Fetch plants by category
             fetchCategoryPlants(cat.id);
         });
 
