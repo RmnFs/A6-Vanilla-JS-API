@@ -25,7 +25,7 @@ async function loadAllPlants() {
     }
 }
 
-// ----------- Fetch and Render Categories Sidebar -----------
+//   Sideeeeeeeeeeeeeeeebar 
 
 async function loadCategories() {
     showLoader();
