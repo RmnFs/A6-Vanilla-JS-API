@@ -112,6 +112,8 @@ async function fetchCategoryPlants(categoryId) {
 
 // ----------- Render Cards Function -----------
 
+
+
 function renderCards(plants) {
     const container = document.getElementById("cards-container");
     container.innerHTML = "";
@@ -123,35 +125,103 @@ function renderCards(plants) {
 
     plants.forEach((plant) => {
         const card = document.createElement("div");
-        card.className = "bg-white shadow rounded-lg p-4 flex flex-col space-y-3";
+        card.className =
+            "bg-white shadow rounded-lg p-4 flex flex-col space-y-3 cursor-pointer";
+        
+       
+        card.addEventListener("click", () => {
+            loadPlantDetails(plant.id);
+        });
 
-        // Card HTML structure
         card.innerHTML = `
-      <img src="${plant.image}" alt="${plant.name}"
-        class="w-full h-40 object-cover rounded-md" />
+            <img src="${plant.image}" alt="${plant.name}"
+                class="w-full h-40 object-cover rounded-md" />
+            <h3 class="font-semibold text-lg">${plant.name}</h3>
+            <p class="text-gray-600 text-sm line-clamp-2">
+                ${plant.description}
+            </p>
+            <div class="flex items-center justify-between">
+                <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">
+                    ${plant.category}
+                </span>
+                <span class="font-bold">৳${plant.price}</span>
+            </div>
+        `;
 
-      <h3 class="font-semibold text-lg">${plant.name}</h3>
-      <p class="text-gray-600 text-sm line-clamp-2">
-        ${plant.description}
-      </p>
-      <div class="flex items-center justify-between">
-        <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">
-          ${plant.category}
-        </span>
-        <span class="font-bold">৳${plant.price}</span>
-      </div>
-    `;
-
-
+        //Add to Cart button to (prevent modal trigger)
         const btn = document.createElement("button");
         btn.textContent = "Add to Cart";
         btn.className =
             "bg-green-600 text-white py-2 rounded-lg font-medium hover:bg-green-700 transition";
-        btn.addEventListener("click", () => addToCart(plant));
+        btn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            addToCart(plant);
+        });
 
         card.appendChild(btn);
         container.appendChild(card);
     });
+}
+
+
+
+async function loadPlantDetails(plantId) {
+    showLoader();
+    try {
+        const response = await fetch(
+            `https://openapi.programming-hero.com/api/plant/${plantId}`
+        );
+        const result = await response.json();
+        console.log("Plant details API result:", result);
+
+        const plant = result.plants;
+
+        if (plant) {
+            renderPlantModal(plant);
+
+            
+            const modal = document.getElementById("my_modal_5");
+            if (modal && modal.showModal) {
+                modal.showModal();
+            } else {
+                console.error("Modal element not found or showModal not supported!");
+            }
+        } else {
+            console.warn("No plant details found in response.", result);
+        }
+    } catch (error) {
+        console.error("Error fetching plant details:", error);
+    } finally {
+        hideLoader();
+    }
+}
+function renderPlantModal(plant) {
+    const modalBox = document.querySelector("#my_modal_5 .modal-box");
+
+    modalBox.innerHTML = `
+        <h3 class="text-lg font-bold mb-2">${plant.name}</h3>
+
+        <img src="${plant.image}" 
+             alt="${plant.name}" 
+             class="w-full h-48 object-cover rounded mb-3" />
+
+        <p class="text-gray-600 mb-2">
+            ${plant.description}
+        </p>
+
+        <div class="flex justify-between items-center mb-4">
+            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">
+                ${plant.category}
+            </span>
+            <span class="font-bold text-lg">৳${plant.price}</span>
+        </div>
+
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn">Close</button>
+            </form>
+        </div>
+    `;
 }
 
 
