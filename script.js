@@ -1,24 +1,28 @@
+let cart = [];
+
 function showLoader() {
-  document.getElementById("loader").classList.remove("hidden");
+    document.getElementById("loader").classList.remove("hidden");
 }
 
 function hideLoader() {
-  document.getElementById("loader").classList.add("hidden");
+    document.getElementById("loader").classList.add("hidden");
 }
+
+
 
 // ----------- Fetch and Render All Plants (initial load) -----------
 
 async function loadAllPlants() {
-  showLoader();
-  try {
-    const response = await fetch("https://openapi.programming-hero.com/api/plants");
-    const result = await response.json();
-    renderCards(result.plants);
-  } catch (error) {
-    console.error("Error fetching all plants:", error);
-  } finally {
-    hideLoader();
-  }
+    showLoader();
+    try {
+        const response = await fetch("https://openapi.programming-hero.com/api/plants");
+        const result = await response.json();
+        renderCards(result.plants);
+    } catch (error) {
+        console.error("Error fetching all plants:", error);
+    } finally {
+        hideLoader();
+    }
 }
 
 // ----------- Fetch and Render Categories Sidebar -----------
@@ -38,9 +42,11 @@ async function loadCategories() {
         console.error("Error fetching categories:", error);
     }
     finally {
-    hideLoader();
-  }
+        hideLoader();
+    }
 }
+
+
 
 // ----------- Render Category Buttons Dynamically -----------
 
@@ -86,8 +92,8 @@ async function fetchCategoryPlants(categoryId) {
         console.error("Error fetching plants by category:", error);
     }
     finally {
-    hideLoader();
-  }
+        hideLoader();
+    }
 }
 
 // ----------- Render Cards Function -----------
@@ -135,19 +141,67 @@ function renderCards(plants) {
 }
 
 
+function renderCart() {
+    const cartContainer = document.getElementById("cart-items");
+    const totalContainer = document.getElementById("cart-total");
+
+    cartContainer.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item) => {
+        total += item.price * item.quantity;
+
+        const div = document.createElement("div");
+        div.className = "bg-green-50 p-2 rounded flex justify-around";
+
+        div.innerHTML = `
+            <div class="text-left">
+            <h4 class="font-semibold">${item.name}</h4>
+            <p class="text-gray-600 text-sm">৳${item.price} × ${item.quantity}</p>
+            </div>
+            <button class="text-red-800 hover:text-red-600 text-2xl">X</button>
+            `;
+
+        // Remove button
+        div.querySelector("button").addEventListener("click", () => {
+            removeFromCart(item.id);
+        });
+
+        cartContainer.appendChild(div);
+    });
+
+    totalContainer.textContent = `৳${total}`;
+}
 
 function addToCart(plant) {
-    console.log("Adding to cart:", plant);
+    const existingItem = cart.find((item) => item.id === plant.id);
 
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({
+            id: plant.id,
+            name: plant.name,
+            price: plant.price,
+            quantity: 1,
+        });
+    }
+
+    renderCart();
+
+}
+
+function removeFromCart(id) {
+    cart = cart.filter((item) => item.id !== id);
+    renderCart();
 }
 
 
 
 
-// loadCategories();
-// loadAllPlants();
+
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadCategories();
-  loadAllPlants();
+    loadCategories();
+    loadAllPlants();
 });
